@@ -36,4 +36,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * このユーザが所有する属性。（ Attributeモデルとの関係を定義）
+     */
+    public function attribute()
+    {
+        return $this->hasMany(Attribute::class);
+    }
+    
+    /**
+     * このユーザに送られた投稿。（Informationモデルとの関係を定義）
+     */
+    public function informations()
+    {
+        return $this->belongsToMany(Information::class, 'user_informations', 'user_id', 'information_id')->withTimestamps();
+    }
+    
+    /**
+     * このユーザに関係するモデルの件数をロードする。
+     */
+    public function loadRelationshipCounts()
+    {
+        $this->loadCount('attribute', 'informations');
+    }
+    
 }
