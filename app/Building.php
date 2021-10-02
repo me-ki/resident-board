@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Building extends Model
 {
-    protected $fillable = ['room_num', 'status'];
+    protected $fillable = ['name', 'address', 'units'];
     
     /**
      * この建物が紐づけられている属性。（Attributeモデルとの関係を定義）

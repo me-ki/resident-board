@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="text-center">
-        <h1>会員登録</h1>
+        <h2>会員登録</h2>
     </div>
 
     <div class="row">
@@ -21,6 +21,7 @@
                 
                 <div class="form-group">
                     {!! Form::label('category', '種別') !!}
+                    <br>
                     {!! Form::select('category', ['入居者', '社員'], 0) !!}
                 </div>
 
@@ -39,7 +40,7 @@
                     {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                 </div>
 
-                {!! Form::submit('Sign up', ['class' => 'btn btn-primary btn-block']) !!}
+                {!! Form::submit('登　録', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
         </div>
     </div>

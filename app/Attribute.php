@@ -17,7 +17,7 @@ class Attribute extends Model
     }
     
     /**
-     * この属性に付随する建物。（ Buildingモデルとの関係を定義）
+     * この属性が属する建物。（ Buildingモデルとの関係を定義）
      */
     public function building()
     {

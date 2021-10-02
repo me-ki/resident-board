@@ -1,7 +1,24 @@
 .navbar-brand{
     font-weight: bold;
+    font-size: 22px;
 }
 
 body{
-    font-family: 'YuGothic','Yu Gothic','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3','メイリオ', 'Meiryo','ＭＳ ゴシック',sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
   }
+ 
+.linkbox{
+    height: 150px;
+    font-size: 23px;
+}
+
+.mgl-15{
+    margin-left : 15px;
+}
+
+.img-caption{
+    top: 50%;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
+}

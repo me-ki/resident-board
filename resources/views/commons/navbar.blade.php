@@ -11,15 +11,23 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if (Auth::check())
-                    @if(Auth::user()->category = '入居者')
+                    @if(Auth::user()->category == '入居者')
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                {{-- ユーザ詳細ページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">My profile</a></li>
+                                {{-- ユーザTOPページへのリンク --}}
+                                <li class="dropdown-item"><a href="#">HOME</a></li>
+                                {{-- FAQページへのリンク --}}
+                                <li class="dropdown-item"><a href="#">ご入居中のQ＆A</a></li>
+                                {{-- 店舗案内ページへのリンク --}}
+                                <li class="dropdown-item"><a href="#">店舗案内</a></li>
+                                {{-- お問合せフォームへのリンク --}}
+                                <li class="dropdown-item"><a href="#">お問い合わせ</a></li>
+                                {{-- パスワードリセットへのリンク --}}
+                                <li class="dropdown-item"><a href="#">パスワード変更</a></li>
                                 <li class="dropdown-divider"></li>
                                 {{-- ログアウトへのリンク --}}
-                                <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
+                                <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
                             </ul>
                         </li>
                     @else 
@@ -27,8 +35,10 @@
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                {{-- ユーザ詳細ページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">My profile</a></li>
+                                {{-- 管理物件一覧ページへのリンク --}}
+                                <li class="dropdown-item"><a href="#">管理物件一覧</a></li>
+                                {{-- 会員一覧ページへのリンク --}}
+                                <li class="dropdown-item"><a href="#">会員一覧</a></li>
                                 <li class="dropdown-divider"></li>
                                 {{-- ログアウトへのリンク --}}
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>

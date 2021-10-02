@@ -40,7 +40,7 @@ class User extends Authenticatable
     /**
      * このユーザが所有する属性。（ Attributeモデルとの関係を定義）
      */
-    public function attribute()
+    public function attributes()
     {
         return $this->hasMany(Attribute::class);
     }
@@ -48,9 +48,17 @@ class User extends Authenticatable
     /**
      * このユーザに送られた投稿。（Informationモデルとの関係を定義）
      */
-    public function informations()
+    public function user_informations()
     {
         return $this->belongsToMany(Information::class, 'user_informations', 'user_id', 'information_id')->withTimestamps();
+    }
+    
+    /**
+     * このユーザの住んでいる建物に送られた投稿。（Informationモデルとの関係を定義）
+     */
+    public function building_informations()
+    {
+        return $this->belongsToMany(Information::class, 'building_informations', 'building_id', 'information_id')->withTimestamps();
     }
     
     /**
@@ -58,7 +66,7 @@ class User extends Authenticatable
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount('attribute', 'informations');
+        $this->loadCount('attributes');
     }
     
 }
