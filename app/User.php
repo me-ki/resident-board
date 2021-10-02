@@ -38,11 +38,11 @@ class User extends Authenticatable
     ];
     
     /**
-     * このユーザが所有する属性。（ Attributeモデルとの関係を定義）
+     * このユーザの居住マンション。（ Residenceモデルとの関係を定義）
      */
-    public function attributes()
+    public function residences()
     {
-        return $this->hasMany(Attribute::class);
+        return $this->hasMany(Residence::class);
     }
     
     /**
@@ -66,7 +66,7 @@ class User extends Authenticatable
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount('attributes');
+        $this->loadCount('residences');
     }
     
 }

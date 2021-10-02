@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attribute extends Model
+class Residence extends Model
 {
     protected $fillable = ['room_num', 'status'];
     

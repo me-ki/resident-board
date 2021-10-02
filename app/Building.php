@@ -9,11 +9,11 @@ class Building extends Model
     protected $fillable = ['name', 'address', 'units'];
     
     /**
-     * この建物が紐づけられている属性。（Attributeモデルとの関係を定義）
+     * この建物が紐づけられている居住者情報。（Residenceモデルとの関係を定義）
      */
     public function residents()
     {
-        return $this->hasMany(Attribute::class);
+        return $this->hasMany(Residence::class);
     }
     
     /**
