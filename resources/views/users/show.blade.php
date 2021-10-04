@@ -10,14 +10,14 @@
       </div>
     </div>
     
-    {{-- 会員情報一覧 --}}
+    {{-- 会員情報詳細 --}}
     <div class="container">
         <div class="basic-info">
             <div class="d-flex flex-row mt-2">
                 <h4 class="title mr-auto mt-1">基本情報</h4>
                 <div>
-                    {{-- 基本情報修正ページへのリンク --}}
-                    {!! link_to_route('signup.get', '編集', [], ['class' => 'btn btn-secondary btn-sm mb-1']) !!}
+                    {{-- 基本情報編集ページへのリンク --}}
+                     {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-secondary btn-sm']) !!}
                 </div>
             </div>
             <div>
@@ -31,31 +31,43 @@
                         </tr>
                         <tr>
                             <th class="table-active" style="width: 20%">種　　別</th>
-                            <td style="width: 30%">{{ $user->category }}</td>
+                            <td style="width: 30%">
+                                @if ($user->category == 1) 
+                                    入居者
+                                @elseif ($user->category == 2)
+                                    社員
+                                @endif
+                            </td>
                             <th class="table-active" style="width: 20%">Email</th>
                             <td style="width: 30%">{{ $user->email }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="status-info">
+            <div class="residences mt-4">
                 <div class="d-flex flex-row mt-2">
-                <h4 class="title mr-auto mt-1">ステータス</h4>
+                <h4 class="title mr-auto mt-1">居住マンション</h4>
                 <div>
-                    {{-- ステータス情報修正ページへのリンク --}}
-                    {!! link_to_route('signup.get', '更新', [], ['class' => 'btn btn-secondary btn-sm mb-1']) !!}
+                    {{-- 居住マンション登録ページへのリンク --}}
+                    {!! link_to_route('residences.create', '新規登録', ['user' => $user->id], ['class' => 'btn btn-secondary btn-sm mb-1']) !!}
                 </div>
             </div>
             <div>
-                @if (count($attributes) > 0)
-                    @foreach ($attributes as $attribute)
+                @if (count($residences) > 0)
+                    @foreach ($residences as $residence)
                         <table class="table table-bordered mb-2">
                             <tbody>
                                 <tr>
                                     <th class="table-active" style="width: 20%">名　　前</th>
                                     <td style="width: 30%">{{ $user->name }}</td>
                                     <th class="table-active" style="width: 20%">種　　別</th>
-                                    <td style="width: 30%">{{ $user->category }}</td>
+                                    <td style="width: 30%">
+                                        @if ($user->category == 1) 
+                                            入居者
+                                        @elseif ($user->category == 2)
+                                            社員
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th class="table-active" style="width: 20%">ステータス</th>
@@ -74,6 +86,8 @@
                             </div>
                         </div>
                     @endforeach
+                @else
+                    <p class="mt-2 mb-5">居住マンション登録なし</p>
                 @endif
             </div>
         </div>

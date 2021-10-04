@@ -22,7 +22,7 @@
                 <div class="form-group">
                     {!! Form::label('category', '種別') !!}
                     <br>
-                    {!! Form::select('category', ['入居者', '社員'], 0) !!}
+                    {!! Form::select('category', [1 => '入居者', 2 => '社員'], 0, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">

@@ -60,10 +60,7 @@ class UsersController extends Controller
             'name' => 'required|max:255',
             'login_id' => 'required|max:255',
             'email' => 'required|max:255',
-            'category' => 'required|max:255',
-            'building_id' => 'max:20',
-            'room_num' => 'max:255',
-            'status' => 'required|max:255'
+            'category' => 'required|max:8',
         ]);
         
         // userIdの値で会員情報を検索して取得

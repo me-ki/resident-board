@@ -28,13 +28,19 @@
                                 <th class="table-active" style="width: 20%">名　　前</th>
                                 <td style="width: 30%">{{ $user->name }}</td>
                                 <th class="table-active" style="width: 20%">種　　別</th>
-                                <td style="width: 30%">{{ $user->category }}</td>
+                                <td style="width: 30%">
+                                    @if ($user->category == 1) 
+                                        入居者
+                                    @elseif ($user->category == 2)
+                                        社員
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <th class="table-active" style="width: 20%">ステータス</th>
                                 <td style="width: 30%"></td>
                                 <th class="table-active" style="width: 20%">居住マンション</th>
-                                <td style="width: 30%">test</td>
+                                <td style="width: 30%"></td>
                             </tr>
                         </tbody>
                     </table>
