@@ -9,7 +9,7 @@ class Residence extends Model
     protected $fillable = ['room_num', 'status'];
     
     /**
-     * この属性を所有するユーザ。（ Userモデルとの関係を定義）
+     * この居住情報が属するユーザ。（ Userモデルとの関係を定義）
      */
     public function user()
     {
@@ -17,7 +17,7 @@ class Residence extends Model
     }
     
     /**
-     * この属性が属する建物。（ Buildingモデルとの関係を定義）
+     * この居住情報が属する建物。（ Buildingモデルとの関係を定義）
      */
     public function building()
     {

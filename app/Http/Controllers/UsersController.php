@@ -27,32 +27,29 @@ class UsersController extends Controller
         // 関係するモデルの件数をロード
         $user->loadRelationshipCounts();
         
-        // ユーザの属性一覧を作成日時の降順で取得
-        $attributes = $user->attributes()->orderBy('created_at', 'desc')->get();
+        // ユーザの住居情報一覧（residences)を作成日時の降順で取得
+        $residences = $user->residences()->orderBy('created_at', 'desc')->get();
         
         // ユーザ詳細ビューでそれらを表示
         return view('users.show', [
            'user' => $user,
-           'attributes' => $attributes
+           'residences' => $residences
         ]);
     }
     
-    // 会員情報の更新画面表示処理
+    // 会員基本情報の更新画面表示処理
     public function edit($userId)
     {
         // ユーザidの値で編集したいユーザを検索して取得
         $user = User::findOrFail($userId);
-        // ユーザに関連する属性を検索して取得
-        $attribute = $user->attribute()->orderBy('created_at', 'desc')->limit(1);
         
         // ユーザ編集画面を開く
         return view('users.edit', [
            'user' => $user,
-           'attribute' => $attribute
         ]);
     }
     
-    //会員情報の更新処理
+    //会員基本情報の更新処理
     public function update(Request $request, $userId)
     {
         //バリデーション
@@ -72,16 +69,13 @@ class UsersController extends Controller
         $user->category = $request->category;
         $user->save();
         
-        // userIdの値で会員情報を検索して取得
-        $user = User::findOrFail($userId);
-        // 会員情報を更新
-        $user->name = $request->name;
-        $user->login_id = $request->login_id;
-        $user->email = $request->email;
-        $user->category = $request->category;
-        $user->save();
+        // ユーザの属性一覧を作成日時の降順で取得
+        $residences = $user->residences()->orderBy('created_at', 'desc')->get();
         
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        // 前のURLへリダイレクトさせる
+         return view('users.show', [
+           'user' => $user,
+           'residences' => $residences
+        ]);
     }
 }

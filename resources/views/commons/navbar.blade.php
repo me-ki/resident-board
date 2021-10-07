@@ -11,7 +11,7 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if (Auth::check())
-                    @if(Auth::user()->category == '入居者')
+                    @if(Auth::user()->category == 1)
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -30,15 +30,15 @@
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
                             </ul>
                         </li>
-                    @else 
+                    @elseif(Auth::user()->category == 2)
                     {{-- 社員がログインした場合 --}}
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 {{-- 管理物件一覧ページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">管理物件一覧</a></li>
+                                <li class="dropdown-item">{!! link_to_route('users.index', '管理物件一覧', [], ['class' => 'nav-link']) !!}</li>
                                 {{-- 会員一覧ページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">会員一覧</a></li>
+                                <li class="dropdown-item">{!! link_to_route('users.index', '会員一覧', [], ['class' => 'nav-link']) !!}</li>
                                 <li class="dropdown-divider"></li>
                                 {{-- ログアウトへのリンク --}}
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>

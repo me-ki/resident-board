@@ -37,10 +37,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="table-active" style="width: 20%">ステータス</th>
-                                <td style="width: 30%"></td>
                                 <th class="table-active" style="width: 20%">居住マンション</th>
-                                <td style="width: 30%"></td>
+                                <td style="width: 30%">
+                                    @if(\App\Residence::where('user_id', '$user->id'))
+                                        test
+                                    @endif
+                                </td>
+                                <th class="table-active" style="width: 20%">ステータス</th>
+                                <td style="width: 30%">
+                                    @if(\App\Residence::where('user_id', $user->id))
+                                        
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>

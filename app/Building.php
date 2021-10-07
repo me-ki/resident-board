@@ -11,7 +11,7 @@ class Building extends Model
     /**
      * この建物が紐づけられている居住者情報。（Residenceモデルとの関係を定義）
      */
-    public function residents()
+    public function residences()
     {
         return $this->hasMany(Residence::class);
     }

@@ -38,7 +38,7 @@ class User extends Authenticatable
     ];
     
     /**
-     * このユーザの居住マンション。（ Residenceモデルとの関係を定義）
+     * このユーザの居住マンション情報すべて。（ Residenceモデルとの関係を定義）
      */
     public function residences()
     {
@@ -46,11 +46,11 @@ class User extends Authenticatable
     }
     
     /**
-     * このユーザに送られた投稿。（Informationモデルとの関係を定義）
+     * このユーザの最新の居住マンション情報。（ Residenceモデルとの関係を定義）
      */
-    public function user_informations()
+    public function residence()
     {
-        return $this->belongsToMany(Information::class, 'user_informations', 'user_id', 'information_id')->withTimestamps();
+        return $this->hasMany(Residence::class)->orderBy('updated_at', 'desc')->first();
     }
     
     /**
@@ -68,5 +68,5 @@ class User extends Authenticatable
     {
         $this->loadCount('residences');
     }
-    
+     
 }
