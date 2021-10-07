@@ -9,17 +9,18 @@ use App\Residence;
 class ResidencesController extends Controller
 {
     // getでresidences/createにアクセスされた場合の「新規登録画面表示処理」
-    public function create()
+    public function create(Request $request)
     {
         // 建物名一覧をBuildingクラスから取得
         $buildings = \App\Building::all()->pluck('name', 'id');
+        $value = $request->input('user_id');
         
         $residence = new Residence;
 
         //居住マンション登録ビューを表示
         return view('residences.create', compact('buildings'), [
-            'residence' => $residence
-        ]);
+            'residence' => $residence,
+        ])->with('userId', $value);
     }
     
     public function store(Request $request)
@@ -31,7 +32,7 @@ class ResidencesController extends Controller
         ]);
         
         $residence = new Residence;
-        $residence->user_id = $request->user()->id;
+        $residence->user_id = $request->user_id;
         $residence->building_id = $request->building_id;
         $residence->room_num = $request->room_num;
         $residence->status = $request->status;

@@ -17,7 +17,7 @@
                 <h4 class="title mr-auto mt-1">基本情報</h4>
                 <div>
                     {{-- 基本情報編集ページへのリンク --}}
-                     {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-primary btn-sm']) !!}
+                    {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-primary btn-sm']) !!}
                 </div>
             </div>
             <div>
@@ -50,7 +50,7 @@
                 <h4 class="title mr-auto mt-1">居住マンション</h4>
                 <div>
                     {{-- 居住マンション登録ページへのリンク --}}
-                    {!! link_to_route('residences.create', '新規登録', ['user' => $user->id], ['class' => 'btn btn-primary btn-sm mb-1']) !!}
+                    {!! link_to_route('residences.create', '新規登録', ['user_id' => $user->id], ['class' => 'btn btn-primary btn-sm mb-1']) !!}
                 </div>
             </div>
             <div>

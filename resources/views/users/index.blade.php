@@ -22,6 +22,7 @@
         <div>
             @if (count($users) > 0)
                 @foreach ($users as $user)
+                
                     <table class="table table-bordered mb-2">
                         <tbody>
                             <tr>
@@ -44,10 +45,10 @@
                                     @endif
                                 </td>
                                 <th class="table-active" style="width: 20%">ステータス</th>
-                                <td style="width: 30%">
-                                    @if(\App\Residence::where('user_id', $user->id))
+                                   
                                         
-                                    @endif
+                                <td style="width: 30%">
+                                   
                                 </td>
                             </tr>
                         </tbody>

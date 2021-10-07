@@ -15,11 +15,14 @@
         <div class="row">
             <div class="col-12 mt-2">
                 {!! Form::model($residence, ['route' => 'residences.store']) !!}
-    
+                    
+                    <div class="form-group">
+                        {!! Form::hidden('user_id', $userId) !!}
+                    </div>
+                    
                     <div class="form-group">
                         {!! Form::label('building_id', '建物名') !!}
                         {!! Form::select('building_id', $buildings, null, ['class' => 'form-control', 'placeholder' => '選択してください']) !!}
-
                     </div>
                     
                     <div class="form-group">
@@ -35,6 +38,7 @@
                     <div class="form-group text-center">
                         {!! Form::submit('登　録', ['class' => 'btn btn-primary w-25']) !!}
                     </div>
+                    
     
                 {!! Form::close() !!}
             </div>

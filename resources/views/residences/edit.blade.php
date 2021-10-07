@@ -17,9 +17,7 @@
                  {!! Form::model($residence, ['route' => ['residences.update', $residence->id], 'method' => 'put']) !!}
     
                     <div class="form-group">
-                        {!! Form::label('building_id', '建物ID') !!}
-                        {!! Form::text('building_id', null, ['class' => 'form-control', 'readonly']) !!}
-
+                        {!! Form::hidden('building_id', null) !!}
                     </div>
                     
                     <div class="form-group">
