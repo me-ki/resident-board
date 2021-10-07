@@ -46,14 +46,6 @@ class User extends Authenticatable
     }
     
     /**
-     * このユーザの最新の居住マンション情報。（ Residenceモデルとの関係を定義）
-     */
-    public function residence()
-    {
-        return $this->hasMany(Residence::class)->orderBy('updated_at', 'desc')->first();
-    }
-    
-    /**
      * このユーザの住んでいる建物に送られた投稿。（Informationモデルとの関係を定義）
      */
     public function building_informations()

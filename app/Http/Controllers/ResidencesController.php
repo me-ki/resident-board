@@ -101,7 +101,7 @@ class ResidencesController extends Controller
         $residence = \App\Residence::findOrFail($id);
         
         // residenceに紐づくユーザー情報を取得
-        $user = $residence->user();
+        $user = $residence->user;
         
         $residence->delete();
         
