@@ -78,4 +78,20 @@ class UsersController extends Controller
            'residences' => $residences
         ]);
     }
+    
+    public function destroy($id)
+    {
+        // idの値でユーザーを検索して取得
+        $user = User::findOrFail($id);
+        
+        $user->delete();
+        
+        // ユーザ一覧（会員情報一覧）をidの降順で取得
+        $users = User::orderBy('id', 'desc')->paginate(10);
+
+        // ユーザ一覧ビューでそれを表示
+        return view('users.index', [
+            'users' => $users,
+        ]);
+    }
 }

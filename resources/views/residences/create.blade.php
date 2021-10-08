@@ -21,7 +21,7 @@
                     </div>
                     
                     <div class="form-group">
-                        {!! Form::label('building_id', '建物名') !!}
+                        {!! Form::label('building_id', 'マンション名') !!}
                         {!! Form::select('building_id', $buildings, null, ['class' => 'form-control', 'placeholder' => '選択してください']) !!}
                     </div>
                     

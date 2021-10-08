@@ -17,7 +17,7 @@
                 <h4 class="title mr-auto mt-1">基本情報</h4>
                 <div>
                     {{-- 基本情報編集ページへのリンク --}}
-                    {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-primary btn-sm']) !!}
+                    {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-secondary btn-sm']) !!}
                 </div>
             </div>
             <div>
@@ -79,11 +79,11 @@
                             </tbody>
                         </table>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                            <div class="mr-3">
-                                {!! link_to_route('residences.edit', '編　集', ['residence' => $residence->id], ['class' => 'btn btn-secondary btn-sm']) !!}
+                            <div class="mr-2">
+                                {!! link_to_route('users.show', 'お知らせ', ['user' => $user->id], ['class' => 'btn btn-success btn-sm']) !!}
                             </div>
                             <div>
-                                {!! link_to_route('users.show', 'お知らせ', ['user' => $user->id], ['class' => 'btn btn-success btn-sm']) !!}
+                                {!! link_to_route('residences.edit', '編　集', ['residence' => $residence->id], ['class' => 'btn btn-secondary btn-sm']) !!}
                             </div>
                         </div>
                     @endforeach

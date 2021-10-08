@@ -5,35 +5,31 @@
       <div class="position-relative">
         <img src="/image/living_room.jpg" alt="ME-KI MANSION" class="img-fluid rounded">
         <div class="img-caption position-absolute text-center bg-light">
-          <p class="h1 mt-3">会員基本情報</p>
+          <p class="h1 mt-3">建物情報詳細</p>
         </div>
       </div>
     </div>
     
+    {{-- 建物登録情報 --}}
     <div class="container">
-        <h4 class="title mr-auto mt-1">基本情報編集</h4>
+        <h4 class="title mr-auto mt-1">建物情報編集</h4>
         <div class="row">
-            <div class="col-12">
-                {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'put']) !!}
+            <div class="col-12 mt-2">
+                {!! Form::model($building, ['route' => ['buildings.update', $building->id], 'method' => 'put']) !!}
     
                     <div class="form-group">
-                        {!! Form::label('name', '名前') !!}
+                        {!! Form::label('name', 'マンション名') !!}
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
                     </div>
                     
                     <div class="form-group">
-                        {!! Form::label('login_id', 'ログインID') !!}
-                        {!! Form::text('login_id', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('address', '住所') !!}
+                        {!! Form::text('address', null, ['class' => 'form-control']) !!}
                     </div>
                     
                     <div class="form-group">
-                        {!! Form::label('category', '種別') !!}
-                        {!! Form::select('category', [1 => '入居者', 2 => '社員'], null, ['class' => 'form-control']) !!}
-                    </div>
-                    
-                    <div class="form-group">
-                        {!! Form::label('email', 'メールアドレス') !!}
-                        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('units', '戸数') !!}
+                        {!! Form::number('units', null, ['class' => 'form-control']) !!}
                     </div>
                     
                     <div class="form-group text-center">
@@ -42,8 +38,8 @@
                 {!! Form::close() !!}
                 
                 <div class="form-group text-center">
-                    {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
-                        {!! Form::submit('会員情報削除', ['class' => 'btn btn-danger w-25']) !!}
+                    {!! Form::open(['route' => ['buildings.destroy', $building->id], 'method' => 'delete']) !!}
+                        {!! Form::submit('建物情報削除', ['class' => 'btn btn-danger w-25']) !!}
                     {!! Form::close() !!}
                 </div>
             </div>

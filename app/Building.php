@@ -8,6 +8,10 @@ class Building extends Model
 {
     protected $fillable = ['name', 'address', 'units'];
     
+    protected $casts = [
+        'units' => 'integer'
+    ];
+    
     /**
      * この建物が紐づけられている居住者情報。（Residenceモデルとの関係を定義）
      */

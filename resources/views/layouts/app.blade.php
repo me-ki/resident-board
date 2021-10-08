@@ -19,6 +19,10 @@
 
             @yield('content')
         </div>
+        
+        <footer class="border-top bg-white text-center bg-secondary" style="height:30px;margin-top:250px;">
+            <small>©ME-KI MANSION</small>
+        </footer>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

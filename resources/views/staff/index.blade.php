@@ -16,7 +16,7 @@
     
     <div class="aside col-sm-4">
         <ul>
-            <li class="linkbox list-unstyled bg-light d-flex align-items-center justify-content-center"><a href="buildings/building"><i class="fas fa-building fa-lg"></i><span class="mgl-15">管理物件一覧</span></a></li>
+            <li class="nav-item">{!! link_to_route('buildings.index', '管理物件一覧', [], ['class' => 'nav-link']) !!}</li>
             <li class="nav-item">{!! link_to_route('users.index', '会員一覧', [], ['class' => 'nav-link']) !!}</li>
         </ul>
         

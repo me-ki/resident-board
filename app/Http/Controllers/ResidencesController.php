@@ -31,24 +31,28 @@ class ResidencesController extends Controller
             'status' => 'required|max:8'
         ]);
         
-        $residence = new Residence;
-        $residence->user_id = $request->user_id;
-        $residence->building_id = $request->building_id;
-        $residence->room_num = $request->room_num;
-        $residence->status = $request->status;
-        $residence->save();
+        if (\App\User::findOrFail($request->user_id)){ 
+            $residence = new Residence;
+            $residence->user_id = $request->user_id;
+            $residence->building_id = $request->building_id;
+            $residence->room_num = $request->room_num;
+            $residence->status = $request->status;
+            $residence->save();
         
-        // residenceに紐づくユーザー情報を取得
-        $user = $residence->user;
-        
-        // ユーザの住居情報一覧（residences)を作成日時の降順で取得
-        $residences = $user->residences()->orderBy('created_at', 'desc')->get();
-        
-        // ユーザー詳細画面へ戻る
-         return view('users.show', [
-           'user' => $user,
-           'residences' => $residences
-        ]);
+            // residenceに紐づくユーザー情報を取得
+            $user = $residence->user;
+            
+            // ユーザの住居情報一覧（residences)を作成日時の降順で取得
+            $residences = $user->residences()->orderBy('created_at', 'desc')->get();
+            
+            // ユーザー詳細画面へ戻る
+             return view('users.show', [
+               'user' => $user,
+               'residences' => $residences
+            ]);
+        }
+        // 前のURLへリダイレクトさせる
+        return back();
     }
     
     // 居住マンション情報の更新画面表示処理
