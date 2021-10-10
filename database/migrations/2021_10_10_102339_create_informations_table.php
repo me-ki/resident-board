@@ -17,7 +17,14 @@ class CreateInformationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('content');
+            $table->string('to_all');
+            $table->unsignedBigInteger('created_userId');
+            $table->unsignedBigInteger('updated_userId');
             $table->timestamps();
+            
+            // 外部キー制約
+            $table->foreign('created_userId')->references('id')->on('users')->onDelete('no action');
+            $table->foreign('updated_userId')->references('id')->on('buildings')->onDelete('no action');
         });
     }
 
