@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-3">
     <div class="information col-sm-8">
         <h4 class="title">インフォメーション</h4>
     </div>

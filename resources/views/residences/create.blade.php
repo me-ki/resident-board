@@ -21,6 +21,11 @@
                     </div>
                     
                     <div class="form-group">
+                        {!! Form::label('user_name', '名前') !!}
+                        {!! Form::text('user_name', \App\User::find($userId)->name, ['class' => 'form-control', 'disabled']) !!}
+                    </div>
+                    
+                    <div class="form-group">
                         {!! Form::label('building_id', 'マンション名') !!}
                         {!! Form::select('building_id', $buildings, null, ['class' => 'form-control', 'placeholder' => '選択してください']) !!}
                     </div>

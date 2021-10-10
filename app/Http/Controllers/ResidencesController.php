@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Residence;
 
 class ResidencesController extends Controller
@@ -13,6 +12,8 @@ class ResidencesController extends Controller
     {
         // 建物名一覧をBuildingクラスから取得
         $buildings = \App\Building::all()->pluck('name', 'id');
+       
+        //URLパラメータからユーザーidを取得
         $value = $request->input('user_id');
         
         $residence = new Residence;

@@ -23,7 +23,7 @@ class Building extends Model
     /**
      * この建物に対して送られた投稿。（Informationモデルとの関係を定義）
      */
-    public function informations()
+    public function building_informations()
     {
         return $this->belongsToMany(Information::class, 'building_informations', 'building_id', 'information_id')->withTimestamps();
     }
@@ -33,6 +33,6 @@ class Building extends Model
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount('residents', 'informations');
+        $this->loadCount('residences', 'building_informations');
     }
 }

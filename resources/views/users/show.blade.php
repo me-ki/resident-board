@@ -14,7 +14,7 @@
     <div class="container">
         <div class="basic-info">
             <div class="d-flex flex-row mt-2">
-                <h4 class="title mr-auto mt-1">基本情報</h4>
+                <h4 class="title mr-auto mt-1">顧客情報</h4>
                 <div>
                     {{-- 基本情報編集ページへのリンク --}}
                     {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-secondary btn-sm']) !!}
@@ -45,7 +45,7 @@
                 </table>
             </div>
         </div>
-        <div class="residences mt-4">
+        <div class="residences mt-5">
             <div class="d-flex flex-row mt-2">
                 <h4 class="title mr-auto mt-1">居住マンション</h4>
                 <div>
@@ -79,9 +79,6 @@
                             </tbody>
                         </table>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                            <div class="mr-2">
-                                {!! link_to_route('users.show', 'お知らせ', ['user' => $user->id], ['class' => 'btn btn-success btn-sm']) !!}
-                            </div>
                             <div>
                                 {!! link_to_route('residences.edit', '編　集', ['residence' => $residence->id], ['class' => 'btn btn-secondary btn-sm']) !!}
                             </div>

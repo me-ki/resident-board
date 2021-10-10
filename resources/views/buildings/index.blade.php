@@ -41,10 +41,10 @@
                     </table>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
                         <div class="mr-2">
-                            {!! link_to_route('buildings.edit', 'お知らせ', ['building' => $building->id], ['class' => 'btn btn-success btn-sm']) !!}
+                            {!! link_to_route('informations.create', 'インフォ作成', ['building_id' => $building->id], ['class' => 'btn btn-success btn-sm']) !!}
                         </div>
                         <div>
-                            {!! link_to_route('buildings.edit', '編　集', ['building' => $building->id], ['class' => 'btn btn-secondary btn-sm']) !!}
+                            {!! link_to_route('buildings.edit', '建物編集', ['building' => $building->id], ['class' => 'btn btn-secondary btn-sm']) !!}
                         </div>
                     </div>
                 @endforeach

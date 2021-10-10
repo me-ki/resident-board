@@ -21,6 +21,11 @@
                     </div>
                     
                     <div class="form-group">
+                        {!! Form::label('user_name', '名前') !!}
+                        {!! Form::text('user_name', \App\User::find($residence->user_id)->name, ['class' => 'form-control', 'disabled']) !!}
+                    </div>
+                    
+                    <div class="form-group">
                         {!! Form::label('building_id', 'マンション名') !!}
                         {!! Form::text('building_id', \App\Building::find($residence->building_id)->name, ['class' => 'form-control', 'disabled']) !!}
 

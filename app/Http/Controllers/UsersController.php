@@ -11,7 +11,9 @@ class UsersController extends Controller
     public function index()
     {
         // ユーザ一覧（会員情報一覧）をidの降順で取得
-        $users = User::orderBy('id', 'desc')->paginate(10);
+        $users = User::with(['residences' => function ($query) {
+        $query->orderBy('created_at', 'desc'); // 作成日時の降順
+        }])->orderBy('id', 'desc')->get();
 
         // ユーザ一覧ビューでそれを表示
         return view('users.index', [
