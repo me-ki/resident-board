@@ -24,7 +24,7 @@ class CreateInformationsTable extends Migration
             
             // 外部キー制約
             $table->foreign('created_userId')->references('id')->on('users')->onDelete('no action');
-            $table->foreign('updated_userId')->references('id')->on('buildings')->onDelete('no action');
+            $table->foreign('updated_userId')->references('id')->on('users')->onDelete('no action');
         });
     }
 

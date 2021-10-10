@@ -12,6 +12,14 @@ body{
     font-size: 23px;
 }
 
+li a{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .mgl-15{
     margin-left : 15px;
 }
