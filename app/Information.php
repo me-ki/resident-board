@@ -25,4 +25,5 @@ class Information extends Model
     {
         return $this->belongsTo(Building::class);
     }
+    
 }

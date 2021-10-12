@@ -54,29 +54,19 @@ class User extends Authenticatable
     }
     
     /**
-     * このユーザの住んでいる建物に送られた投稿。（Informationモデルとの関係を定義）
-     */
-    public function building_informations()
-    {
-        return $this->belongsToMany(Information::class, 'building_informations', 'building_id', 'information_id')->withTimestamps();
-    }
-    
-    /**
      * このユーザに関係するモデルの件数をロードする。
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount('residences');
+        $this->loadCount('user_informations');
     }
     
-     /**
-     * $informationIdで指定された投稿をユーザに紐づける。
-     *
-     * @param  int  $informationId
-     * @return bool
+    /**
+     * $informationIdで指定されたお知らせをユーザに紐づける
+     * @param int $informationId
      */
-    public function information($informationId)
+    public function inform($informationId)
     {
-        $this->informations()->attach($informationId);
-    } 
+        $this->user_informations()->attach($informationId);
+    }
 }

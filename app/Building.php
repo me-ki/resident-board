@@ -35,4 +35,15 @@ class Building extends Model
     {
         $this->loadCount('residences', 'building_informations');
     }
+    
+    /**
+     * $informationIdで指定された投稿を建物に紐づける。
+     *
+     * @param  int  $informationId
+     * @return bool
+     */
+    public function inform($informationId)
+    {
+        $this->building_informations()->attach($informationId);
+    } 
 }

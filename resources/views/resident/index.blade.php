@@ -9,6 +9,12 @@
   </div>
 </div>
 
-@include('informations.user-info')
-
-@include('informations.building-info')
+<div class="contents-wrapper">
+  
+  <!--ユーザ宛てインフォメーション一覧-->
+  @include('informations.user-info')
+  
+  <!--建物宛て・全入居者宛てインフォメーション一覧-->
+  @include('informations.building-info')
+  
+</div>

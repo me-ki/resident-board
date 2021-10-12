@@ -6,7 +6,52 @@ use Illuminate\Http\Request;
 use App\Information;
 
 class InformationsController extends Controller
-{
+{   
+    public function index()
+    {
+        $data = [];
+        if (\Auth::check()) { // 認証済みの場合
+            // 認証済みユーザを取得
+            $user = \Auth::user();
+            
+            if($user->category == '1') {
+                // ユーザ宛てのお知らせ一覧を作成日時の降順で取得
+                $user_informations = $user->user_informations()->orderBy('created_at', 'desc')->paginate(5);
+                
+                $matchThese = ['user_id' => $user->id, 'status' => '入居中'];
+                
+                // 契約中の居住マンション情報とそれに紐づくインフォを取得
+                $residences = \App\Residence::where($matchThese)
+                ->with(['all_informations' => function ($query) {
+                $query->orderBy('created_at', 'desc')->keyBy('information_id');; // 作成日時の降順
+                }])->orderBy('id', 'desc')->paginate(5);
+                
+                $data = [
+                    'user' => $user,
+                    'user_informations' => $user_informations,
+                    'residences' => $residences
+                ];
+            } elseif($user->category == '2') {
+                $data = [
+                    'user' => $user
+                ];
+            }
+        }
+        // Welcomeビューでそれらを表示
+        return view('welcome', $data);
+    }
+    
+     public function show($id)
+    {
+        // idの値でインフォメーションを検索して取得
+        $information = Information::findOrFail($id);
+        
+        // ユーザ詳細ビューでそれらを表示
+        return view('informations.show', [
+           'information' => $information
+        ]);
+    }
+    
     // getでinformations/createにアクセスされた場合の「新規登録画面表示処理」
     public function create(Request $request)
     {
@@ -79,7 +124,7 @@ class InformationsController extends Controller
             
             //インフォメーションにユーザを紐づける
             $user = \App\User::find($request->postTo_id);
-            $user->user_informations($last_insert_id);
+            $user->inform($last_insert_id);
         
         } elseif ($request->kinds == 'building') {
             
@@ -95,7 +140,7 @@ class InformationsController extends Controller
             
             //インフォメーションに建物を紐づける
             $building = \App\Building::find($request->postTo_id);
-            $building->building_informations($last_insert_id);
+            $building->inform($last_insert_id);
         
         } else {
             
