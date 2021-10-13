@@ -11,7 +11,7 @@
                         <tr>
                             <td style="width: 15%">{{ $building_information->created_at->format('Y年m月d日') }}</td>
                             <th style="width: 85%"><a class="link-font" href="{{ route('informations.show', ['information' => $building_information->id]) }}">
-                                @if($building_information->to_all == 1)
+                                @if($building_information->to_whom == 0)
                                     {{ $building_information->title }}
                                 @else
                                     {{ $building_information->buildings->first()->name }}／{{ $building_information->title }}

@@ -33,7 +33,7 @@ class InformationsController extends Controller
                 }
                 
                 //全棟（全入居者）宛のインフォメーションIDを取得
-                $informationIds_to_all = Information::where('to_all', '=', '1')->pluck('informations.id')->toArray();
+                $informationIds_to_all = Information::where('to_whom', '=', '0')->pluck('informations.id')->toArray();
                 $building_informationIds_all = array_merge($building_informationIds_all, $informationIds_to_all);
                 //重複インフォの削除
                 $building_informationIds_all = array_unique($building_informationIds_all);
@@ -126,14 +126,15 @@ class InformationsController extends Controller
         ]);
         
         $information = new Information;
-        $to_all_0 = 0;
-        $to_all_1 = 1;
+        $to_whom_0 = 0;
+        $to_whom_1 = 1;
+        $to_whom_2 = 2;
         
         if($request->kinds == 'resident') {
             
             $information->title = $request->title;
             $information->content = $request->content;
-            $information->to_all = $to_all_0;
+            $information->to_whom = $to_whom_1;
             $information->created_userId = $request->user()->id;
             $information->updated_userId = $request->user()->id;
             $information->save();
@@ -149,7 +150,7 @@ class InformationsController extends Controller
             
             $information->title = $request->title;
             $information->content = $request->content;
-            $information->to_all = $to_all_0;
+            $information->to_whom = $to_whom_2;
             $information->created_userId = $request->user()->id;
             $information->updated_userId = $request->user()->id;
             $information->save();
@@ -165,7 +166,7 @@ class InformationsController extends Controller
             
             $information->title = $request->title;
             $information->content = $request->content;
-            $information->to_all = $to_all_1;
+            $information->to_who = $to_whom_0;
             $information->created_userId = $request->user()->id;
             $information->updated_userId = $request->user()->id;
             $information->save();
