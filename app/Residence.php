@@ -33,13 +33,17 @@ class Residence extends Model
     }
     
     /**
-     * 全建物と紐づけられた建物に対して送られた投稿。（Informationモデルとの関係を定義）
+     * 全建物宛てとresidenceに紐づけられた建物宛てに送られた投稿。（Informationモデルとの関係を定義）
      */
     public function all_informations()
     {
-        $informationIds = $this->building_informations()->pluck('information_id')->toArray();
-        $informationIds[] = Information::where('to_all', '=', '1');
-        return $this->Information::whereIn('information_id', $informationIds);
+        //このresidenceに紐づけられたインフォのidを取得して配列にする
+        $building_informationIds = $this->building_informations()->pluck('informations.id')->toArray();
+        //全棟（全入居者）宛に作られたインフォidも配列に追加
+        $all_informationIds = Information::where('to_all', '=', '1')->pluck('informations.id')->toArray();
+        $informationIds = array_merge($building_informationIds, $all_informationIds);
+        
+        return Information::whereIn('id', $informationIds);
     }
     
 }

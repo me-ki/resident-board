@@ -16,21 +16,40 @@ class InformationsController extends Controller
             
             if($user->category == '1') {
                 // ユーザ宛てのお知らせ一覧を作成日時の降順で取得
-                $user_informations = $user->user_informations()->orderBy('created_at', 'desc')->paginate(5);
+                $user_informations = $user->user_informations()->orderBy('created_at', 'desc')->paginate(5, ["*"], 'user_info');
                 
-                $matchThese = ['user_id' => $user->id, 'status' => '入居中'];
+                //ユーザの入居中のresidenceを取得するための条件設定
+                $matchThese = ['user_id' => $user->id, 'status' => '1'];
                 
                 // 契約中の居住マンション情報とそれに紐づくインフォを取得
-                $residences = \App\Residence::where($matchThese)
-                ->with(['all_informations' => function ($query) {
-                $query->orderBy('created_at', 'desc')->keyBy('information_id');; // 作成日時の降順
-                }])->orderBy('id', 'desc')->paginate(5);
+                $residences = \App\Residence::where($matchThese)->get();
+                
+                $building_informationIds_all = []; 
+                
+                //居住マンションごとのインフォメーションIDを取得して配列に追加
+                foreach($residences as $residence) {
+                    $building_informationIds = $residence->building_informations()->pluck('informations.id')->toArray();
+                    $building_informationIds_all = array_merge($building_informationIds, $building_informationIds_all);
+                }
+                
+                //全棟（全入居者）宛のインフォメーションIDを取得
+                $informationIds_to_all = Information::where('to_all', '=', '1')->pluck('informations.id')->toArray();
+                $building_informationIds_all = array_merge($building_informationIds_all, $informationIds_to_all);
+                //重複インフォの削除
+                $building_informationIds_all = array_unique($building_informationIds_all);
+                
+                $building_informations = Information::whereIn('id',  $building_informationIds_all)
+                ->with(['buildings' => function ($query) {
+                $query->orderBy('id', 'desc'); // 作成日時の降順
+                }])->orderBy('created_at', 'desc')->paginate(5, ["*"], 'building_info');
                 
                 $data = [
                     'user' => $user,
                     'user_informations' => $user_informations,
-                    'residences' => $residences
+                    'residences' => $residences,
+                    'building_informations' => $building_informations
                 ];
+                
             } elseif($user->category == '2') {
                 $data = [
                     'user' => $user
