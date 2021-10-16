@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Carbon\Carbon;
 use App\Information;
 
 class InformationsController extends Controller
 {   
-    public function index()
+    public function index(Request $request)
     {
         $data = [];
         if (\Auth::check()) { // 認証済みの場合
@@ -21,36 +23,56 @@ class InformationsController extends Controller
                 //ユーザの入居中のresidenceを取得するための条件設定
                 $matchThese = ['user_id' => $user->id, 'status' => '1'];
                 
-                // 契約中の居住マンション情報とそれに紐づくインフォを取得
-                $residences = \App\Residence::where($matchThese)->get();
+                //居住中のbuilding_idを取得
+                $buildingIds = \App\Residence::where($matchThese)->pluck('building_id')->toArray();
+                //重複するbuilding_idを削除
+                $unique_buildingIds = array_unique($buildingIds);
                 
-                $building_informationIds_all = []; 
+                //居住マンションの建物情報を取得
+                $buildings = \App\Building::whereIn('id', $unique_buildingIds)->orderBy('created_at', 'desc')->get();
                 
-                //居住マンションごとのインフォメーションIDを取得して配列に追加
-                foreach($residences as $residence) {
-                    $building_informationIds = $residence->building_informations()->pluck('informations.id')->toArray();
-                    $building_informationIds_all = array_merge($building_informationIds, $building_informationIds_all);
+                //マンション宛てのインフォメーションを取得
+                $building_informations = array();
+                foreach($buildings as $building){
+                    $informations = $building->building_informations()->get();
+                    foreach($informations as $information){
+                        $building_informations[] = $information;
+                    }
                 }
                 
-                //全棟（全入居者）宛のインフォメーションIDを取得
-                $informationIds_to_all = Information::where('to_whom', '=', '0')->pluck('informations.id')->toArray();
-                $building_informationIds_all = array_merge($building_informationIds_all, $informationIds_to_all);
-                //重複インフォの削除
-                $building_informationIds_all = array_unique($building_informationIds_all);
+                //全棟（全入居者）宛のインフォメーションを取得
+                $to_all_informations = Information::where('to_whom', '=', '0')->get();
+                foreach($to_all_informations as $to_all_information){
+                    $building_informations[] = $to_all_information;
+                }
                 
-                $building_informations = Information::whereIn('id',  $building_informationIds_all)
-                ->with(['buildings' => function ($query) {
-                $query->orderBy('id', 'desc'); // 作成日時の降順
-                }])->orderBy('created_at', 'desc')->paginate(5, ["*"], 'building_info');
+                $ids = array_column($building_informations, 'created_at');
                 
+                //created_atの降順（SORT_DESC）に並び替える.
+                array_multisort($ids, SORT_DESC, $building_informations);
+                
+                //配列をコレクションに変換
+                $building_informations = collect($building_informations);
+                //ページネーションの作成
+                $building_informations = new LengthAwarePaginator(
+                    $building_informations->forPage($request->page, 5),
+                    count($building_informations),
+                    5,
+                    $request->page,
+                    array('path' => $request->url())
+                );
+    
                 $data = [
                     'user' => $user,
                     'user_informations' => $user_informations,
-                    'residences' => $residences,
                     'building_informations' => $building_informations
                 ];
                 
             } elseif($user->category == '2') {
+                
+                //入居者宛てのインフォメーションを取得
+                $user_informations = 
+                
                 $data = [
                     'user' => $user
                 ];
@@ -60,15 +82,19 @@ class InformationsController extends Controller
         return view('welcome', $data);
     }
     
-     public function show($id)
+     public function show($informationId)
     {
         // idの値でインフォメーションを検索して取得
-        $information = Information::findOrFail($id);
+        $information = Information::findOrFail($informationId);
+        $user = \Auth::user();
         
-        // ユーザ詳細ビューでそれらを表示
-        return view('informations.show', [
-           'information' => $information
-        ]);
+        if($user->category == '1') {
+            
+            return view('informations.show', [
+               'user' => $user,
+               'information' => $information
+            ]);
+        }
     }
     
     // getでinformations/createにアクセスされた場合の「新規登録画面表示処理」
@@ -166,12 +192,69 @@ class InformationsController extends Controller
             
             $information->title = $request->title;
             $information->content = $request->content;
-            $information->to_who = $to_whom_0;
+            $information->to_whom = $to_whom_0;
             $information->created_userId = $request->user()->id;
             $information->updated_userId = $request->user()->id;
             $information->save();
         }
         //登録が終わったらtopに戻る
+        return redirect('/');
+    }
+    
+    //インフォメーションの編集画面表示
+    public function edit($id)
+    {
+        //編集したいインフォメーションを検索して取得
+        $information = Information::findOrFail($id);
+        
+        //投稿したユーザー
+        $user = $information->user();
+        
+        //投稿した建物
+        $buildings = $information->buildings();
+        
+        //インフォメーション編集画面を開く
+        return view('informations.edit', [
+           'information' => $information,
+           'user' => $user,
+           'buildings' => $buildings
+        ]);
+    }
+    
+    // インフォメーションの更新処理
+    public function update(Request $request, $informationId)
+    {
+        //バリデーション
+        $request->validate([
+            'title' => 'required|max:255', 
+            'content' => 'required|max:255'
+        ]);
+        
+        // informationIdの値で居住マンション情報を検索して取得
+        $information = Information::findOrFail($informationId);
+        // 居住マンション情報を更新
+        $information->title = $request->title;
+        $information->content = $request->content;
+        $information->updated_userId = $request->user()->id;
+        $information->save();
+        
+        $information = Information::findOrFail($informationId);
+        
+        // インフォメーション詳細画面へ戻る
+         return view('informations.show', [
+           'information' => $information
+        ]);
+    }
+    
+    // インフォメーションの削除
+    public function destroy($id)
+    {
+        // idの値でインフォメーション情報を検索して取得
+        $information = Information::findOrFail($id);
+        
+        $information->delete();
+        
+        //削除したらtopに戻る
         return redirect('/');
     }
 }

@@ -25,13 +25,5 @@ class Information extends Model
     {
         return $this->belongsToMany(Building::class, 'building_informations', 'information_id', 'building_id')->withTimestamps();
     }
-     
-    /**
-     * この投稿を知らせた居住マンション情報。（Residenceモデルとの関係を定義）
-     */
-    public function residences()
-    {
-        return $this->belongsToMany(Residence::class, 'building_informations', 'information_id', 'building_id')->withTimestamps();
-    }
     
 }

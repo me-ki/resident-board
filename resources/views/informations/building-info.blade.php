@@ -1,4 +1,4 @@
-<div class="buildingInfo-container mt-2">
+<div class="buildingInfo-container mt-4">
     <h4 class="title">インフォメーション</h4>
     <div>
         @if (count($building_informations) == 0)
@@ -14,7 +14,7 @@
                                 @if($building_information->to_whom == 0)
                                     {{ $building_information->title }}
                                 @else
-                                    {{ $building_information->buildings->first()->name }}／{{ $building_information->title }}
+                                   {{ \App\Building::find($building_information->pivot->building_id)->name }} ご入居者様へ／{{ $building_information->title }}
                                 @endif
                             </a></th>
                         </tr>
