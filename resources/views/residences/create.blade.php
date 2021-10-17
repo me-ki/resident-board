@@ -13,7 +13,7 @@
     <div class="container">
         <h4 class="title mr-auto mt-1">居住マンション新規登録</h4>
         <div class="row">
-            <div class="col-12 mt-2">
+            <div class="col-sm-8 mt-2">
                 {!! Form::model($residence, ['route' => 'residences.store']) !!}
                     
                     <div class="form-group">
@@ -47,6 +47,9 @@
     
                 {!! Form::close() !!}
             </div>
+            
+            <!--サイドメニュー-->
+            @include('commons.sidebar')
         </div>
     </div>
 @endsection

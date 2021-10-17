@@ -13,16 +13,19 @@
     <div class="container">
         <h4 class="title mr-auto mt-1">インフォメーション編集</h4>
         <div class="row">
-            <div class="col-12">
+            <div class="col-sm-8">
                 {!! Form::model($information, ['route' => ['informations.update', $information->id], 'method' => 'put']) !!}
                     
                     <div class="form-group">
-                        @if (count($user))
+                        @if ($information->to_whom == 1)
                             {!! Form::label('user_name', '宛先') !!}
-                            {!! Form::text('user_name', $user->name, ['class' => 'form-control', 'disabled']) !!}
-                        @elseif (count($buildings))
-                            {!! Form::label('building_name', '宛先') !!}
-                            {!! Form::text('building_name', \App\Building::find($postTo_id)->name, ['class' => 'form-control', 'disabled']) !!}
+                            {!! Form::text('user_name', $resident->name, ['class' => 'form-control', 'disabled']) !!}
+                        @elseif ($information->to_whom == 2)
+                        
+                            @foreach($buildings as $building)
+                                {!! Form::label('building_name', '宛先') !!}
+                                {!! Form::text('building_name', $building->name, ['class' => 'form-control', 'disabled']) !!}
+                            @endforeach
                         @else
                             {!! Form::label('user_name', '宛先') !!}
                             {!! Form::text('user_name', '全入居者', ['class' => 'form-control', 'disabled']) !!}
@@ -46,6 +49,9 @@
     
                 {!! Form::close() !!}
             </div>
+            
+            <!--サイドメニュー-->
+            @include('commons.sidebar')
         </div>
     </div>
 @endsection

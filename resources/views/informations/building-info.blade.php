@@ -9,8 +9,8 @@
                 <tbody>
                     @foreach ($building_informations as $building_information)
                         <tr>
-                            <td style="width: 15%">{{ $building_information->created_at->format('Y年m月d日') }}</td>
-                            <th style="width: 85%"><a class="link-font" href="{{ route('informations.show', ['information' => $building_information->id]) }}">
+                            <td style="width: 30%">{{ $building_information->created_at->format('Y年m月d日') }}</td>
+                            <th style="width: 70%"><a class="link-font" href="{{ route('informations.show', ['information' => $building_information->id]) }}">
                                 @if($building_information->to_whom == 0)
                                     {{ $building_information->title }}
                                 @else

@@ -9,8 +9,8 @@
                 <tbody>
                     @foreach ($user_informations as $user_information)
                         <tr>
-                            <td style="width: 15%">{{ $user_information->created_at->format('Y年m月d日') }}</td>
-                            <th style="width: 85%"><a class="link-font" href="{{ route('informations.show', ['information' => $user_information->id]) }}">{{ $user_information->title }}</a></th>
+                            <td style="width: 30%">{{ $user_information->created_at->format('Y年m月d日') }}</td>
+                            <th style="width: 70%"><a class="link-font" href="{{ route('informations.show', ['information' => $user_information->id]) }}">{{ $user_information->title }}</a></th>
                         </tr>
                     @endforeach
                 </tbody>

@@ -20,7 +20,7 @@
             @yield('content')
         </div>
         
-        <footer class="border-top bg-white text-center bg-secondary" style="height:30px;margin-top:250px;">
+        <footer class="border-top bg-white text-center bg-secondary" style="height:30px;margin-top:100px;">
             <small>©ME-KI MANSION</small>
         </footer>
 

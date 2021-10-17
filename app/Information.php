@@ -13,9 +13,9 @@ class Information extends Model
     /**
      * この投稿を知らせたユーザー。（Userモデルとの関係を定義）
      */
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'user_informations', 'information_id', 'user_id')->withTimestamps();
     }
     
     /**

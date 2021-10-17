@@ -41,3 +41,7 @@ table th a{
     color: gray;
 }
 
+.sidebar{
+    position: sticky;
+    top: 25px;
+}

@@ -13,7 +13,7 @@
     <div class="container">
         <h4 class="title mr-auto mt-1">インフォメーション作成</h4>
         <div class="row">
-            <div class="col-12">
+            <div class="col-sm-8">
                 {!! Form::model($information, ['route' => 'informations.store']) !!}
                     
                     <div class="form-group">
@@ -56,10 +56,11 @@
                     <div class="form-group text-center">
                         {!! Form::submit('投　稿', ['class' => 'btn btn-primary w-25']) !!}
                     </div>
-                    
     
                 {!! Form::close() !!}
             </div>
+            <!--サイドメニュー-->
+            @include('commons.sidebar')
         </div>
     </div>
 @endsection

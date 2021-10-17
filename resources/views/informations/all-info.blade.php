@@ -1,20 +1,25 @@
-<div class="buildingInfo-container mt-2">
-    <h4 class="title">インフォメーション一覧</h4>
+<div class="buildingInfo-container">
     <div>
-        @if (count($building_informations) == 0)
+        @if (count($all_informations) == 0)
             <br>
             <p class="annotation border-bottom">現在インフォメーションはありません</p>
         @else
             <table class="info table table-hover mt-2">
                 <tbody>
-                    @foreach ($building_informations as $building_information)
+                    
+                    @foreach ($all_informations as $all_information)
                         <tr>
-                            <td style="width: 15%">{{ $building_information->created_at->format('Y年m月d日') }}</td>
-                            <th style="width: 85%"><a class="link-font" href="{{ route('informations.show', ['information' => $building_information->id]) }}">
-                                @if($building_information->to_whom == 0)
-                                    {{ $building_information->title }}
-                                @else
-                                    {{ \App\Building::find($building_information->pivot->building_id)->name }}／{{ $building_information->title }}
+                            <td style="width: 30%">{{ $all_information->created_at->format('Y年m月d日') }}</td>
+                            <th style="width: 70%"><a class="link-font" href="{{ route('informations.show', ['information' => $all_information->id]) }}">
+                                @if($all_information->to_whom == 0)
+                                    全入居者様
+                                    {{ $all_information->title }}
+                                @elseif($all_information->to_whom == 1)
+                                    {{ \App\User::find($all_information->pivot->user_id)->name }}
+                                    {!! nl2br(e($all_information->title)) !!}
+                                @elseif($all_information->to_whom == 2)
+                                    {{ \App\Building::find($all_information->pivot->building_id)->name }}
+                                    {!! nl2br(e($all_information->title)) !!}
                                 @endif
                             </a></th>
                         </tr>
@@ -22,7 +27,7 @@
                 </tbody>
             </table>
             {{-- ページネーションのリンク --}}
-            {{-- <div class="d-flex justify-content-end">{{ $building_informations->links() }}</div> --}}
+            <div class="d-flex justify-content-end">{{ $all_informations->links() }}</div>
         @endif
     </div>
 </div>

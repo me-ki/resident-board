@@ -14,7 +14,7 @@
     <div class="container">
         <h4 class="title mr-auto mt-1">建物情報編集</h4>
         <div class="row">
-            <div class="col-12 mt-2">
+            <div class="col-sm-8 mt-2">
                 {!! Form::model($building, ['route' => ['buildings.update', $building->id], 'method' => 'put']) !!}
     
                     <div class="form-group">
@@ -43,6 +43,9 @@
                     {!! Form::close() !!}
                 </div>
             </div>
+            
+            <!--サイドメニュー-->
+            @include('commons.sidebar')
         </div>
     </div>
 @endsection
