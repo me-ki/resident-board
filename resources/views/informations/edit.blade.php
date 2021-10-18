@@ -10,27 +10,26 @@
       </div>
     </div>
     
-    <div class="container">
-        <h4 class="title mr-auto mt-1">インフォメーション編集</h4>
-        <div class="row">
-            <div class="col-sm-8">
+    <div class="container row">
+        <div class="main col-sm-8">
+            <h4 class="title mr-auto mt-1 border-bottom">インフォメーション編集</h4>
+            <div class="to_whom mt-4">
+                宛先：
+                @if ($information->to_whom == 1)
+                    @foreach($residents as $resident)
+                        {{ $resident->name }}
+                    @endforeach
+                @elseif ($information->to_whom == 2)
+                    @foreach($buildings as $building)
+                        {{ $building->name }}
+                    @endforeach
+                @else
+                    全入居者様
+                @endif        
+            </div>
+            <br>
+            <div class="form">
                 {!! Form::model($information, ['route' => ['informations.update', $information->id], 'method' => 'put']) !!}
-                    
-                    <div class="form-group">
-                        @if ($information->to_whom == 1)
-                            {!! Form::label('user_name', '宛先') !!}
-                            {!! Form::text('user_name', $resident->name, ['class' => 'form-control', 'disabled']) !!}
-                        @elseif ($information->to_whom == 2)
-                        
-                            @foreach($buildings as $building)
-                                {!! Form::label('building_name', '宛先') !!}
-                                {!! Form::text('building_name', $building->name, ['class' => 'form-control', 'disabled']) !!}
-                            @endforeach
-                        @else
-                            {!! Form::label('user_name', '宛先') !!}
-                            {!! Form::text('user_name', '全入居者', ['class' => 'form-control', 'disabled']) !!}
-                        @endif                        
-                    </div>
                     
                     <div class="form-group">
                         {!! Form::label('title', 'タイトル') !!}
@@ -49,9 +48,8 @@
     
                 {!! Form::close() !!}
             </div>
-            
-            <!--サイドメニュー-->
-            @include('commons.sidebar')
         </div>
+        <!--サイドメニュー-->
+        @include('commons.sidebar')
     </div>
 @endsection

@@ -72,53 +72,11 @@ class InformationsController extends Controller
             //ログインユーザーがスタッフの場合     
             } elseif($user->category == '2') {
                 
-                //入居者を取得
-                $users = \App\User::where('category', '=', '1')->get();
-                
-                //入居者宛てのインフォメーションを取得
-                $all_informations = array();
-                foreach($users as $user){
-                    $informations = $user->user_informations()->get();
-                    foreach($informations as $information){
-                        $all_informations[] = $information;
-                    }
-                }
-                
-                //建物情報を取得
-                $buildings = \App\Building::all();
-                
-                //建物宛てのインフォメーションを取得
-                foreach($buildings as $building){
-                    $informations = $building->building_informations()->get();
-                    foreach($informations as $information){
-                        $all_informations[] = $information;
-                    }
-                }
-                
-                //全棟（全入居者）宛のインフォメーションを取得
-                $to_all_informations = Information::where('to_whom', '=', '0')->get();
-                foreach($to_all_informations as $to_all_information){
-                    $all_informations[] = $to_all_information;
-                }
-                
-                $ids = array_column($all_informations, 'created_at');
-                
-                //created_atの降順（SORT_DESC）に並び替える.
-                array_multisort($ids, SORT_DESC, $all_informations);
-                
-                //配列をコレクションに変換
-                $all_informations = collect($all_informations);
-                //ページネーションの作成
-                $all_informations = new LengthAwarePaginator(
-                    $all_informations->forPage($request->page, 20),
-                    count($all_informations),
-                    10,
-                    $request->page,
-                    array('path' => $request->url())
-                );
-                
+                //すべてのインフォを取得
+                $informations = Information::orderBy('created_at', 'desc')->paginate(20);
+    
                 $data = [
-                    'all_informations' => $all_informations
+                    'informations' => $informations
                 ];
             }
         }
@@ -276,13 +234,13 @@ class InformationsController extends Controller
         
         //入居者宛てインフォなら入居者情報を取得
         if($information->to_whom == 1) {
-            $resident = $information->user()->get();
+            $residents = $information->users()->get();
         //建物宛てなら建物を情報を取得    
         } elseif($information->to_whom == 2) {
             $buildings = $information->buildings()->get();
         }
         return view('informations.edit', [
-           'resident' => $resident,
+           'residents' => $residents,
            'buildings' => $buildings,
            'information' => $information
         ]);
