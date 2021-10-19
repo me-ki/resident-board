@@ -17,18 +17,18 @@
           <p>投稿日：{{ $information->created_at->format('Y年m月d日') }}</p>
           
           {{-- スタッフには宛先も表示 --}}
-          @if(Auth::user()->category == 2)
+          @if(Auth::user()->category == 5)
             @if($information->to_whom == 0)
-              <p>宛先：全入居者様</p>
+              <p>宛　先：全入居者様</p>
             @elseif($information->to_whom == 1)
-              <p>宛先:
+              <p>宛　先:
                 @foreach($residents as $resident)
                    {{ $resident->name }}　
                 @endforeach
               </p>
           
             @elseif($information->to_whom == 2)
-              <p>宛先:
+              <p>宛　先:
                 @foreach($buildings as $building)
                    {{ $building->name }}　
                 @endforeach
@@ -40,7 +40,7 @@
       
         {{-- スタッフには編集・削除ボタンを表示 --}}
           <div>
-            @if(Auth::user()->category == '2')
+            @if(Auth::user()->category == '5')
               <div class="d-flex justify-content-start mt-5">
                 {{-- インフォメーション編集ページへのリンク --}}
                 {!! link_to_route('informations.edit', '編　集', ['information' => $information->id], ['class' => 'btn btn-secondary']) !!}

@@ -31,9 +31,9 @@
                                     <td style="width: 30%">{{ $user->name }}</td>
                                     <th class="table-active" style="width: 20%">種　　別</th>
                                     <td style="width: 30%">
-                                        @if ($user->category == 1) 
+                                        @if ($user->category == 10) 
                                             入居者
-                                        @elseif ($user->category == 2)
+                                        @elseif ($user->category == 5)
                                             社員
                                         @endif
                                     </td>

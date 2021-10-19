@@ -11,7 +11,7 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if (Auth::check())
-                    @if(Auth::user()->category == 1)
+                    @if(Auth::user()->category == 10)
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -30,7 +30,7 @@
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
                             </ul>
                         </li>
-                    @elseif(Auth::user()->category == 2)
+                    @elseif(Auth::user()->category == 5)
                     {{-- 社員がログインした場合 --}}
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>

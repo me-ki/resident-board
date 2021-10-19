@@ -2,9 +2,9 @@
 
 @section('content')
     @if (Auth::check())
-        @if(Auth::user()->category == '1')
+        @if(Auth::user()->category == '10')
             @include('resident/index')
-        @else
+        @else(Auth::user()->category == '5')
             @include('staff/index')
         @endif
     @else

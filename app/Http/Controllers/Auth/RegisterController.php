@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -29,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -54,7 +56,7 @@ class RegisterController extends Controller
             'login_id' => ['required', 'string', 'min:8','max:12','alpha_num','unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'category' => ['required', 'integer', 'max:8']
+            'category' => ['required', 'integer', 'max:20']
         ]);
     }
 
@@ -72,6 +74,28 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'email' => $data['email'],
             'category' => $data['category'],
+        ]);
+    }
+    
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //$this->guard()->login($user);
+
+        //return $this->registered($request, $user)
+        //                ?: redirect($this->redirectPath());
+        
+        //ユーザー登録後は会員一覧にリダイレクト
+        $users = User::with(['residences' => function ($query) {
+        $query->orderBy('created_at', 'desc'); // 作成日時の降順
+        }])->orderBy('id', 'desc')->get();
+
+        // ユーザ一覧ビューでそれを表示
+        return view('users.index', [
+            'users' => $users,
         ]);
     }
 }

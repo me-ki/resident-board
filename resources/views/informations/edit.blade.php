@@ -13,7 +13,7 @@
     <div class="container row">
         <div class="main col-sm-8">
             <h4 class="title mr-auto mt-1 border-bottom">インフォメーション編集</h4>
-            <div class="to_whom mt-4">
+            <div class="to_whom mt-4 font-weight-bold">
                 宛先：
                 @if ($information->to_whom == 1)
                     @foreach($residents as $resident)

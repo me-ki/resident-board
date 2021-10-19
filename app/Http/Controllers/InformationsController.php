@@ -17,7 +17,7 @@ class InformationsController extends Controller
             $user = \Auth::user();
             
             //ログインユーザーが入居者の場合
-            if($user->category == '1') {
+            if($user->category == '10') {
                 // ユーザ宛てのお知らせ一覧を作成日時の降順で取得
                 $user_informations = $user->user_informations()->orderBy('created_at', 'desc')->paginate(5, ["*"], 'user_info');
                 
@@ -70,7 +70,7 @@ class InformationsController extends Controller
                 ];
            
             //ログインユーザーがスタッフの場合     
-            } elseif($user->category == '2') {
+            } elseif($user->category == '5') {
                 
                 //すべてのインフォを取得
                 $informations = Information::orderBy('created_at', 'desc')->paginate(20);
@@ -93,7 +93,7 @@ class InformationsController extends Controller
         $buildings = array();
         
         //入居者だったら
-        if($user->category == '1') {
+        if($user->category == '10') {
             
             return view('informations.show', [
                'user' => $user,
@@ -101,7 +101,7 @@ class InformationsController extends Controller
             ]);
         
         //スタッフだったら    
-        } elseif($user->category == '2') {
+        } elseif($user->category == '5') {
             //入居者宛てインフォなら入居者情報を取得
             if($information->to_whom == 1) {
                 $residents = $information->users()->get();
@@ -121,188 +121,207 @@ class InformationsController extends Controller
     
     // getでinformations/createにアクセスされた場合の「新規登録画面表示処理」
     public function create(Request $request)
-    {
-        $value1 = $request->input('user_id');
-        $value2 = $request->input('building_id');
-        
-        //入居者への投稿
-        if($value1) {
-        
-            $information = new Information;
-            $kinds = 'resident';
-    
-            //インフォメーション投稿ビューを表示
-            return view('informations.create', [
-                'information' => $information,
-                'kinds' => $kinds,
-                'postTo_id' => $value1
-            ]);
-        
-        //建物への投稿    
-        } elseif($value2) {
+    {   
+        // 認証済みユーザを取得
+        $user = \Auth::user();
+        if ($user->category == 5) { // 社員の場合
             
-            $information = new Information;
-            $kinds = 'building';
-    
-            //インフォメーション投稿ビューを表示
-            return view('informations.create', [
-                'information' => $information,
-                'kinds' => $kinds,
-                'postTo_id' => $value2
-            ]);
+            $value1 = $request->input('user_id');
+            $value2 = $request->input('building_id');
+            
+            //入居者への投稿
+            if($value1) {
+            
+                $information = new Information;
+                $kinds = 'resident';
         
-        //全員（全棟）への投稿    
-        } else {
-            $information = new Information;
-            $kinds = 'all';
-    
-            //インフォメーション投稿ビューを表示
-            return view('informations.create', [
-                'information' => $information,
-                'kinds' => $kinds,
-                'postTo_id' => 'all'
-            ]);
+                //インフォメーション投稿ビューを表示
+                return view('informations.create', [
+                    'information' => $information,
+                    'kinds' => $kinds,
+                    'postTo_id' => $value1
+                ]);
+            
+            //建物への投稿    
+            } elseif($value2) {
+                
+                $information = new Information;
+                $kinds = 'building';
+        
+                //インフォメーション投稿ビューを表示
+                return view('informations.create', [
+                    'information' => $information,
+                    'kinds' => $kinds,
+                    'postTo_id' => $value2
+                ]);
+            
+            //全員（全棟）への投稿    
+            } else {
+                $information = new Information;
+                $kinds = 'all';
+        
+                //インフォメーション投稿ビューを表示
+                return view('informations.create', [
+                    'information' => $information,
+                    'kinds' => $kinds,
+                    'postTo_id' => 'all'
+                ]);
+            }
+        } else { //社員以外だったら
+            return redirect('/');
         }
     }
     
     public function store(Request $request)
-    {
-        //バリデーション
-        $request->validate([
-            'title' => 'required|max:255', 
-            'content' => 'required|max:255',
-        ]);
+    {   
+        // 認証済みユーザを取得
+        $user = \Auth::user();
+        if ($user->category == 5) { // 社員の場合
         
-        $information = new Information;
-        $to_whom_0 = 0;
-        $to_whom_1 = 1;
-        $to_whom_2 = 2;
-        
-        if($request->kinds == 'resident') {
+            //バリデーション
+            $request->validate([
+                'title' => 'required|max:255', 
+                'content' => 'required|max:255',
+            ]);
             
-            $information->title = $request->title;
-            $information->content = $request->content;
-            $information->to_whom = $to_whom_1;
-            $information->created_userId = $request->user()->id;
-            $information->updated_userId = $request->user()->id;
-            $information->save();
+            $information = new Information;
+            $to_whom_0 = 0;
+            $to_whom_1 = 1;
+            $to_whom_2 = 2;
             
-            //作成したインフォメーションのidを取得
-            $last_insert_id = $information->id;
+            if($request->kinds == 'resident') {
+                
+                $information->title = $request->title;
+                $information->content = $request->content;
+                $information->to_whom = $to_whom_1;
+                $information->created_userId = $request->user()->id;
+                $information->updated_userId = $request->user()->id;
+                $information->save();
+                
+                //作成したインフォメーションのidを取得
+                $last_insert_id = $information->id;
+                
+                //インフォメーションにユーザを紐づける
+                $user = \App\User::find($request->postTo_id);
+                $user->inform($last_insert_id);
             
-            //インフォメーションにユーザを紐づける
-            $user = \App\User::find($request->postTo_id);
-            $user->inform($last_insert_id);
-        
-        } elseif ($request->kinds == 'building') {
+            } elseif ($request->kinds == 'building') {
+                
+                $information->title = $request->title;
+                $information->content = $request->content;
+                $information->to_whom = $to_whom_2;
+                $information->created_userId = $request->user()->id;
+                $information->updated_userId = $request->user()->id;
+                $information->save();
+                
+                //作成したインフォメーションのidを取得
+                $last_insert_id = $information->id;
+                
+                //インフォメーションに建物を紐づける
+                $building = \App\Building::find($request->postTo_id);
+                $building->inform($last_insert_id);
             
-            $information->title = $request->title;
-            $information->content = $request->content;
-            $information->to_whom = $to_whom_2;
-            $information->created_userId = $request->user()->id;
-            $information->updated_userId = $request->user()->id;
-            $information->save();
-            
-            //作成したインフォメーションのidを取得
-            $last_insert_id = $information->id;
-            
-            //インフォメーションに建物を紐づける
-            $building = \App\Building::find($request->postTo_id);
-            $building->inform($last_insert_id);
-        
-        } else {
-            
-            $information->title = $request->title;
-            $information->content = $request->content;
-            $information->to_whom = $to_whom_0;
-            $information->created_userId = $request->user()->id;
-            $information->updated_userId = $request->user()->id;
-            $information->save();
-        }
-        //登録が終わったらtopに戻る
+            } else {
+                
+                $information->title = $request->title;
+                $information->content = $request->content;
+                $information->to_whom = $to_whom_0;
+                $information->created_userId = $request->user()->id;
+                $information->updated_userId = $request->user()->id;
+                $information->save();
+            }
+        } 
+        //topに戻る
         return redirect('/');
     }
     
     //インフォメーションの編集画面表示
     public function edit($informationId)
     {
-        // idの値でインフォメーションを検索して取得
-        $information = Information::findOrFail($informationId);
+        // 認証済みユーザを取得
         $user = \Auth::user();
-        $resident = [];
-        $buildings = array();
+        if ($user->category == 5) { // 社員の場合
         
-        //入居者宛てインフォなら入居者情報を取得
-        if($information->to_whom == 1) {
-            $residents = $information->users()->get();
-        //建物宛てなら建物を情報を取得    
-        } elseif($information->to_whom == 2) {
-            $buildings = $information->buildings()->get();
+            // idの値でインフォメーションを検索して取得
+            $information = Information::findOrFail($informationId);
+            $user = \Auth::user();
+            $residents = array();
+            $buildings = array();
+            
+            //入居者宛てインフォなら入居者情報を取得
+            if($information->to_whom == 1) {
+                $residents = $information->users()->get();
+            //建物宛てなら建物を情報を取得    
+            } elseif($information->to_whom == 2) {
+                $buildings = $information->buildings()->get();
+            }
+            return view('informations.edit', [
+               'residents' => $residents,
+               'buildings' => $buildings,
+               'information' => $information
+            ]);
+        } else {
+            return redirect ('/');
         }
-        return view('informations.edit', [
-           'residents' => $residents,
-           'buildings' => $buildings,
-           'information' => $information
-        ]);
     }
     
     // インフォメーションの更新処理
     public function update(Request $request, $informationId)
     {
-        //バリデーション
-        $request->validate([
-            'title' => 'required|max:255', 
-            'content' => 'required|max:255'
-        ]);
-        
-        // informationIdの値で居住マンション情報を検索して取得
-        $information = Information::findOrFail($informationId);
-        // 居住マンション情報を更新
-        $information->title = $request->title;
-        $information->content = $request->content;
-        $information->updated_userId = $request->user()->id;
-        $information->save();
-        
-        $information = Information::findOrFail($informationId);
+        // 認証済みユーザを取得
         $user = \Auth::user();
-        $resident = [];
-        $buildings = array();
+        if ($user->category == 5) { // 社員の場合
         
-        //入居者だったら
-        if($user->category == '1') {
-            
-            return view('informations.show', [
-               'user' => $user,
-               'information' => $information
+            //バリデーション
+            $request->validate([
+                'title' => 'required|max:255', 
+                'content' => 'required|max:255'
             ]);
-        
-        //スタッフだったら    
-        } elseif($user->category == '2') {
+            
+            // informationIdの値で居住マンション情報を検索して取得
+            $information = Information::findOrFail($informationId);
+            // 居住マンション情報を更新
+            $information->title = $request->title;
+            $information->content = $request->content;
+            $information->updated_userId = $request->user()->id;
+            $information->save();
+            
+            $information = Information::findOrFail($informationId);
+            $residents = array();
+            $buildings = array();
+            
             //入居者宛てインフォなら入居者情報を取得
             if($information->to_whom == 1) {
-                $resident = $information->user()->get();
-            //建物宛てなら建物を情報を取得    
-            } elseif($information->to_whom == 2) {
-                $buildings = $information->buildings()->get();
+                $residents = $information->users()->get();
+                //建物宛てなら建物を情報を取得    
+                } elseif($information->to_whom == 2) {
+                    $buildings = $information->buildings()->get();
             }
             return view('informations.show', [
-               'resident' => $resident,
+               'residents' => $residents,
                'buildings' => $buildings,
                'information' => $information
             ]);
             
+        } else { //社員以外だったら
+            return redirect ('/');
         }
     }
     
     // インフォメーションの削除
     public function destroy($id)
-    {
-        // idの値でインフォメーション情報を検索して取得
-        $information = Information::findOrFail($id);
+    {   
+        // 認証済みユーザを取得
+        $user = \Auth::user();
+        if ($user->category == 5) { // 社員の場合
         
-        $information->delete();
+            // idの値でインフォメーション情報を検索して取得
+            $information = Information::findOrFail($id);
+            
+            $information->delete();
+        }
         
-        //削除したらtopに戻る
+        //topに戻る
         return redirect('/');
     }
 }
