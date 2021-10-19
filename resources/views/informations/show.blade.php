@@ -37,11 +37,19 @@
           @endif
           
           <p>{{ $information->content}}</p>
-      
-        {{-- スタッフには編集・削除ボタンを表示 --}}
-          <div>
-            @if(Auth::user()->category == '5')
-              <div class="d-flex justify-content-start mt-5">
+          
+          <br>
+          
+          @if(Auth::user()->category == '5')
+          
+            {{-- スタッフには作成者・更新者を表示 --}}
+            <small class="float-right">作成日：{{ $information->created_at }}　作成者：{{ $information->created_userName }}</small>
+            <br>
+            <small class="float-right">更新日：{{ $information->updated_at }}　更新者：{{ $information->updated_userName }}</small>
+            
+            {{-- スタッフには編集・削除ボタンを表示 --}}
+            <div>
+              <div class="d-flex justify-content-end mt-5">
                 {{-- インフォメーション編集ページへのリンク --}}
                 {!! link_to_route('informations.edit', '編　集', ['information' => $information->id], ['class' => 'btn btn-secondary']) !!}
             
@@ -50,8 +58,9 @@
                     {!! Form::submit('削　除', ['class' => 'btn btn-danger']) !!}
                 {!! Form::close() !!}
               </div>
+            </div>
           @endif
-          </div>
+          
       </div>
       {{-- サイドバー表示 --}}
       @include('commons.sidebar')

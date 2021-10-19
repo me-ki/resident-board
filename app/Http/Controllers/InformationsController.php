@@ -194,8 +194,8 @@ class InformationsController extends Controller
                 $information->title = $request->title;
                 $information->content = $request->content;
                 $information->to_whom = $to_whom_1;
-                $information->created_userId = $request->user()->id;
-                $information->updated_userId = $request->user()->id;
+                $information->created_userName = $request->user()->name;
+                $information->updated_userName = $request->user()->name;
                 $information->save();
                 
                 //作成したインフォメーションのidを取得
@@ -210,8 +210,8 @@ class InformationsController extends Controller
                 $information->title = $request->title;
                 $information->content = $request->content;
                 $information->to_whom = $to_whom_2;
-                $information->created_userId = $request->user()->id;
-                $information->updated_userId = $request->user()->id;
+                $information->created_userName = $request->user()->name;
+                $information->updated_userName = $request->user()->name;
                 $information->save();
                 
                 //作成したインフォメーションのidを取得
@@ -226,8 +226,8 @@ class InformationsController extends Controller
                 $information->title = $request->title;
                 $information->content = $request->content;
                 $information->to_whom = $to_whom_0;
-                $information->created_userId = $request->user()->id;
-                $information->updated_userId = $request->user()->id;
+                $information->created_userName = $request->user()->name;
+                $information->updated_userName = $request->user()->name;
                 $information->save();
             }
         } 
@@ -283,7 +283,7 @@ class InformationsController extends Controller
             // 居住マンション情報を更新
             $information->title = $request->title;
             $information->content = $request->content;
-            $information->updated_userId = $request->user()->id;
+            $information->updated_userName = $request->user()->name;
             $information->save();
             
             $information = Information::findOrFail($informationId);

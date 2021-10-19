@@ -8,7 +8,7 @@ class Information extends Model
 {
     protected $table = 'informations';
     
-    protected $fillable = ['title', 'content', 'to_all', 'created_userId', 'updated_userId'];
+    protected $fillable = ['title', 'content', 'to_all', 'created_userName', 'updated_userName'];
 
     /**
      * この投稿を知らせたユーザー。（Userモデルとの関係を定義）
