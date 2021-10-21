@@ -10,7 +10,7 @@
       </div>
     </div>
     
-    <div class="container">
+    <div class="container row">
         <h4 class="title mr-auto mt-1">居住マンション新規登録</h4>
         <div class="row">
             <div class="col-sm-8 mt-2">

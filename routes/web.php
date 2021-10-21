@@ -14,6 +14,7 @@
 Route::get('/', 'InformationsController@index');
 
 Route::view('login', 'auth.login')->name('login');
+Route::view('shop', 'shop.index');
 
 Route::group(['middleware' => ['auth', 'can:admin']], function () {
     // ユーザ登録

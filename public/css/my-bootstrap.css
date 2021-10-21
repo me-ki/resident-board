@@ -44,4 +44,6 @@ table th a{
 .sidebar{
     position: sticky;
     top: 25px;
+    margin-top: 20px;
 }
+

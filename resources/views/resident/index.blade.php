@@ -13,19 +13,21 @@
     </div>
   </div>
   
-  <div class="row mt-3">
-      <!--メイン-->
-      <div class="information col-sm-8">
-        <main>
-          <!--入居者宛てお知らせ一覧-->
-          @include('informations.user-info')
-          <!--建物・全入居者宛てお知らせ一覧-->
-          @include('informations.building-info')
-        </main>
-      </div>
-      
-      <!--サイドメニュー-->
-      @include('commons.sidebar')
+  <div class="container mt-3">
+    <div class="row mt-3">
+        <!--メイン-->
+        <div class="information col-sm-8">
+          <main>
+            <!--入居者宛てお知らせ一覧-->
+            @include('informations.user-info')
+            <!--建物・全入居者宛てお知らせ一覧-->
+            @include('informations.building-info')
+          </main>
+        </div>
+        
+        <!--サイドメニュー-->
+        @include('commons.sidebar')
+    </div>
   </div>
   
 @endsection

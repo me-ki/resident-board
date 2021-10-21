@@ -23,7 +23,7 @@ class FaqsController extends Controller
         //idでFAQ情報を取得
         $faq = Faq::find($id);
         
-        return view('faq.show', [
+        return view('faqs.show', [
             'faq' => $faq
         ]);
     }
@@ -114,7 +114,7 @@ class FaqsController extends Controller
             $faq->updated_userName = $request->user()->name;
             $faq->save();
         
-            return view('faq.show', [
+            return view('faqs.show', [
                 'faq' => $faq
             ]);
         

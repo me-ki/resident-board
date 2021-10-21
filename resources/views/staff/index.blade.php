@@ -14,7 +14,8 @@
   </div>
   
   
-  <div class="row mt-3">
+  <div class="container mt-3">
+    <div class="row">
       <!--メイン-->
       <div class="information col-sm-8">
         <main>
@@ -32,6 +33,7 @@
       
       <!--サイドメニュー-->
       @include('commons.sidebar')
+    </div>
   </div>
   
 @endsection

@@ -16,11 +16,11 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->name }}</a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 {{-- ユーザTOPページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">HOME</a></li>
+                                <li class="dropdown-item"><a href="/">HOME</a></li>
                                 {{-- FAQページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">ご入居中のQ＆A</a></li>
+                                <li class="dropdown-item"><a href="/faqs">ご入居中のQ&A</a></li>
                                 {{-- 店舗案内ページへのリンク --}}
-                                <li class="dropdown-item"><a href="#">店舗案内</a></li>
+                                <li class="dropdown-item"><a href="/shop">店舗案内</a></li>
                                 {{-- お問合せフォームへのリンク --}}
                                 <li class="dropdown-item"><a href="#">お問い合わせ</a></li>
                                 {{-- パスワードリセットへのリンク --}}
@@ -39,6 +39,8 @@
                                 <li class="dropdown-item">{!! link_to_route('buildings.index', '管理物件一覧', [], ['class' => 'nav-link']) !!}</li>
                                 {{-- 会員一覧ページへのリンク --}}
                                 <li class="dropdown-item">{!! link_to_route('users.index', '会員一覧', [], ['class' => 'nav-link']) !!}</li>
+                                {{-- FAQ一覧ページへのリンク --}}
+                                <li class="dropdown-item">{!! link_to_route('faqs.index', 'FAQ一覧', [], ['class' => 'nav-link']) !!}</li>
                                 <li class="dropdown-divider"></li>
                                 {{-- ログアウトへのリンク --}}
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
