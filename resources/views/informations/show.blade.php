@@ -56,7 +56,7 @@
               
                 　{{-- インフォメーション削除ボタン --}}
                   {!! Form::open(['route' => ['informations.destroy', $information->id], 'method' => 'delete']) !!}
-                      {!! Form::submit('削　除', ['class' => 'btn btn-danger']) !!}
+                      {!! Form::submit('削　除', ['class' => 'btn btn-danger btn-dell']) !!}
                   {!! Form::close() !!}
                 </div>
               </div>
@@ -67,4 +67,19 @@
         @include('commons.sidebar')
       </div>
     </div>
+@endsection
+
+@section('btn-dell')
+  <script>
+  $(function (){
+      $(".btn-dell").click(function(){
+          if(confirm("本当に削除しますか？")){
+              // そのままsubmit処理を実行（※削除）
+          }else{
+              // キャンセル
+              return false;
+          }
+      });
+  });
+  </script>
 @endsection

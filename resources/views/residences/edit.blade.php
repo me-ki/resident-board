@@ -49,7 +49,7 @@
                 
                 <div class="form-group text-center">
                     {!! Form::open(['route' => ['residences.destroy', $residence->id], 'method' => 'delete']) !!}
-                        {!! Form::submit('削　除', ['class' => 'btn btn-danger w-25']) !!}
+                        {!! Form::submit('削　除', ['class' => 'btn btn-danger btn-dell w-25']) !!}
                     {!! Form::close() !!}
                 </div>
             </div>
@@ -58,4 +58,19 @@
             @include('commons.sidebar')
         </div>
     </div>
+@endsection
+
+@section('btn-dell')
+  <script>
+  $(function (){
+      $(".btn-dell").click(function(){
+          if(confirm("本当に削除しますか？")){
+              // そのままsubmit処理を実行（※削除）
+          }else{
+              // キャンセル
+              return false;
+          }
+      });
+  });
+  </script>
 @endsection
