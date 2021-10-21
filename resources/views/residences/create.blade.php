@@ -10,10 +10,11 @@
       </div>
     </div>
     
-    <div class="container row">
-        <h4 class="title mr-auto mt-1">居住マンション新規登録</h4>
+    <div class="container mt-3">
         <div class="row">
-            <div class="col-sm-8 mt-2">
+            <div class="col-sm-8">
+                <h4 class="title mr-auto mt-1 border-bottom">居住マンション新規登録</h4>
+            
                 {!! Form::model($residence, ['route' => 'residences.store']) !!}
                     
                     <div class="form-group">

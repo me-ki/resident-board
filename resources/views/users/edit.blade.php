@@ -44,7 +44,7 @@
                         
                         <div class="form-group text-center">
                             {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete']) !!}
-                                {!! Form::submit('会員情報削除', ['class' => 'btn btn-danger btn-dell w-25']) !!}
+                                {!! Form::submit('削　除', ['class' => 'btn btn-danger btn-dell w-25']) !!}
                             {!! Form::close() !!}
                         </div>
                     </div>

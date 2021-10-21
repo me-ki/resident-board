@@ -10,11 +10,12 @@
       </div>
     </div>
     
-    <div class="container row">
-        <h4 class="title mr-auto mt-1">居住マンション情報更新</h4>
+    <div class="container mt-3">
         <div class="row">
             <div class="col-sm-8 mt-2">
-                 {!! Form::model($residence, ['route' => ['residences.update', $residence->id], 'method' => 'put']) !!}
+                <h4 class="title mr-auto mt-1 border-bottom">居住マンション情報更新</h4>
+            
+                {!! Form::model($residence, ['route' => ['residences.update', $residence->id], 'method' => 'put']) !!}
     
                     <div class="form-group">
                         {!! Form::hidden('building_id', null) !!}

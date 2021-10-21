@@ -88,12 +88,6 @@ class UsersController extends Controller
         
         $user->delete();
         
-        // ユーザ一覧（会員情報一覧）をidの降順で取得
-        $users = User::orderBy('id', 'desc')->paginate(10);
-
-        // ユーザ一覧ビューでそれを表示
-        return view('users.index', [
-            'users' => $users,
-        ]);
+        return redirect()->to('users');
     }
 }

@@ -17,7 +17,7 @@
                 <h4 class="title mr-auto mt-1">顧客情報</h4>
                 <div>
                     {{-- 基本情報編集ページへのリンク --}}
-                    {!! link_to_route('users.edit', '基本情報編集', ['user' => $user->id], ['class' => 'btn btn-secondary btn-sm']) !!}
+                    {!! link_to_route('users.edit', '顧客情報編集', ['user' => $user->id], ['class' => 'btn btn-secondary btn-sm']) !!}
                 </div>
             </div>
             <div>
