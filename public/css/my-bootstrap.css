@@ -47,3 +47,20 @@ table th a{
     margin-top: 20px;
 }
 
+.shop-img img{
+    width: 98%;
+    height: 98%;
+}
+
+.shop-name{
+   
+    color: blue;
+}
+
+.shop-detail{
+    width: 750px;
+}
+
+.shop-detail p{
+    line-height: 100%;
+}
