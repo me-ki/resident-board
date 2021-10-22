@@ -11,7 +11,7 @@
             </li>
             
             <li class="linkbox list-unstyled bg-light mt-3">
-              <a href="users"><i class="fas fa-envelope fa-lg mr-2"></i>お問い合わせ</a>
+              <a href="/contact"><i class="fas fa-envelope fa-lg mr-2"></i>お問い合わせ</a>
             </li>
           </ul>
         </aside>

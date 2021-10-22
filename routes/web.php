@@ -41,9 +41,13 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
-
-
 Route::group(['middleware' => ['auth']], function(){
         Route::resource('informations', 'InformationsController');
         Route::resource('faqs', 'FaqsController');
 });
+
+// コンタクト
+Route::get('contact/', 'ContactController@input'); // 入力画面
+Route::patch('contact/', 'ContactController@confirm'); // 確認画面
+Route::post('contact/', 'ContactController@finish')->name('contact.post'); // 完了画面
+
