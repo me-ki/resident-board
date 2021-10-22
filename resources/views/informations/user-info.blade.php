@@ -1,7 +1,7 @@
 <div class="userInfo-container mt-3">
     <h4 class="title">{{ $user->name }} 様へのお知らせ</h4>
     <div>
-        @if (count($user_informations) == 0)
+        @if ($user_informations->isEmpty())
             <br>
             <p class="annotation border-bottom">現在お客様個人へのお知らせはありません</p>
         @else

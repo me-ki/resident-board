@@ -8,15 +8,24 @@ use App\Building;
 
 class BuildingsController extends Controller
 {
-    public function index()
+    public function index(Request $rq)
     {
-        // 建物一覧をidの昇順で取得
-        $buildings = Building::orderBy('id', 'asc')->paginate(10);
-
-        // 管理物件一覧ビューでそれを表示
-        return view('buildings.index', [
-            'buildings' => $buildings
-        ]);
+        ///キーワード受け取り
+        $keyword = $rq->input('keyword');
+    
+        //クエリ生成
+        $query = \App\Building::query();
+    
+        //もしキーワードがあったら
+        if(!empty($keyword))
+        {
+            $query->where('name','like','%'.$keyword.'%');
+            $query->orWhere('address','like','%'.$keyword.'%');
+        }
+    
+        // 全件取得 +ページネーション
+        $buildings = $query->orderBy('id','desc')->paginate(10);
+        return view('buildings.index')->with('buildings',$buildings)->with('keyword',$keyword);
     }
     
     public function create()

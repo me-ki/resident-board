@@ -89,13 +89,6 @@ class RegisterController extends Controller
         //                ?: redirect($this->redirectPath());
         
         //ユーザー登録後は会員一覧にリダイレクト
-        $users = User::with(['residences' => function ($query) {
-        $query->orderBy('created_at', 'desc'); // 作成日時の降順
-        }])->orderBy('id', 'desc')->get();
-
-        // ユーザ一覧ビューでそれを表示
-        return view('users.index', [
-            'users' => $users,
-        ]);
+        return redirect()->to('users');
     }
 }

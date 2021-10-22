@@ -14,9 +14,18 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col-sm-8">
-                <div class="d-flex flex-row mt-2">
-                    <h4 class="title mr-auto mt-1">会員一覧</h4>
-                    <div>
+                <h4 class="title mr-auto mt-1 border-bottom">会員一覧</h4>
+                <div class="d-flex justify-content-between mt-2">    
+                    <!-- 検索フォーム -->
+                    <form method="get" action="" class="form-inline">
+                        <div class="form-group">
+                            <input type="text" name="keyword" class="form-control" value="{{$keyword}}" placeholder="名前やメールアドレス">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="検索" class="btn btn-info" style="margin-left: 15px; color:white;">
+                        </div>
+                    </form>
+                    <div class='mt-3'>
                         {{-- 新規会員登録へのリンク --}}
                         {!! link_to_route('signup.get', '新規会員登録', [], ['class' => 'btn btn-primary mb-3']) !!}
                     </div>
@@ -69,6 +78,7 @@
                                 </div>
                             </div>
                         @endforeach
+                        <div class="d-flex justify-content-end">{{ $users->appends(['keyword'=>$keyword])->render() }}</div>
                     @endif
                 </div>
             </div>

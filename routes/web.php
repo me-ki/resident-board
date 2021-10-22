@@ -26,7 +26,6 @@ Route::group(['middleware' => ['auth', 'can:admin']], function () {
     Route::resource('buildings', 'BuildingsController');
     Route::resource('residences', 'ResidencesController');
     Route::resource('users', 'UsersController');
-        
 });
 
 Route::group(['middleware' => ['auth', 'can:user']], function () {

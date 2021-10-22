@@ -1,7 +1,7 @@
 <div class="buildingInfo-container mt-4">
     <h4 class="title">インフォメーション</h4>
     <div>
-        @if (count($building_informations) == 0)
+        @if ($building_informations->isEmpty())
             <br>
             <p class="annotation border-bottom">現在インフォメーションはありません</p>
         @else

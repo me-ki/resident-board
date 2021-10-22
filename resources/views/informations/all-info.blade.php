@@ -1,6 +1,6 @@
 <div class="buildingInfo-container">
     <div>
-        @if (count($informations) == 0)
+        @if ($informations->isEmpty())
             <br>
             <p class="annotation border-bottom">作成済みインフォメーションはありません</p>
         @else

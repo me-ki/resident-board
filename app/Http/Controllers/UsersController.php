@@ -8,17 +8,24 @@ use App\User;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $rq)
     {
-        // ユーザ一覧（会員情報一覧）をidの降順で取得
-        $users = User::with(['residences' => function ($query) {
-        $query->orderBy('created_at', 'desc'); // 作成日時の降順
-        }])->orderBy('id', 'desc')->get();
-
-        // ユーザ一覧ビューでそれを表示
-        return view('users.index', [
-            'users' => $users,
-        ]);
+        ///キーワード受け取り
+        $keyword = $rq->input('keyword');
+    
+        //クエリ生成
+        $query = \App\User::query();
+    
+        //もしキーワードがあったら
+        if(!empty($keyword))
+        {
+            $query->where('email','like','%'.$keyword.'%');
+            $query->orWhere('name','like','%'.$keyword.'%');
+        }
+    
+        // 全件取得 +ページネーション
+        $users = $query->orderBy('id','desc')->paginate(10);
+        return view('users.index')->with('users',$users)->with('keyword',$keyword);
     }
     
     public function show($id)
