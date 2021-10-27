@@ -51,13 +51,7 @@ class BuildingsController extends Controller
             $building->units = $request->units;
             $building->save();
             
-            // 建物一覧をidの昇順で取得
-            $buildings = Building::orderBy('id', 'asc')->paginate(10);
-    
-            // 管理物件一覧ビューでそれを表示
-            return view('buildings.index', [
-                'buildings' => $buildings
-            ]);
+            return redirect()->to('buildings');
     }
     
     public function edit($id)
@@ -88,13 +82,7 @@ class BuildingsController extends Controller
         $building->units = $request->units;
         $building->save();
         
-        // 建物一覧をidの昇順で取得
-        $buildings = Building::orderBy('id', 'asc')->paginate(10);
-
-        // 管理物件一覧ビューでそれを表示
-        return view('buildings.index', [
-            'buildings' => $buildings
-        ]);
+        return redirect()->to('buildings');
     }
     
     public function destroy($id)
@@ -104,12 +92,6 @@ class BuildingsController extends Controller
         
         $building->delete();
         
-        // 建物をidの降順で取得
-        $buildings = Building::orderBy('id', 'asc')->paginate(10);
-
-        // 管理物件一覧ビューでそれを表示
-        return view('buildings.index', [
-            'buildings' => $buildings
-        ]);
+        return redirect()->to('buildings');
     }
 }

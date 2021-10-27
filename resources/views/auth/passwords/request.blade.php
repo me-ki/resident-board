@@ -1,39 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('パスワードリセット') }}</div>
 
-  <!--メインビジュアル画像-->
-  <div class="container py-4">
-  <div class="position-relative">
-    <img src="/image/living_room.jpg" alt="ME-KI MANSION" class="img-fluid rounded">
-    <div class="img-caption position-absolute text-center bg-light">
-      <p class="h1 mt-3">店舗案内</p>
-    </div>
-  </div>
-    </div>
-  
-  <div class="container mt-3">
-    <div class="row mt-3">
-      <!--メイン-->
-      <div class="information col-sm-8">
-        <h4 class="title mr-auto mt-1 border-bottom">パスワード変更</h4>
-          <div class="card mt-4">
-            <div class="card-body">
-              <form method="POST" action="{{ route('password.email') }}">
-                  {{ csrf_field() }}
-                  <div class="form-group">
-                      <label for="email">メールアドレス</label>
-                      <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" >
-                  </div>
-                  <button type="submit" class="btn btn-primary">パスワード変更用URLを送信</button>
-              </form>
-          </div>
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="login_id" class="col-md-4 col-form-label text-md-right">{{ __('ユーザーID') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="login_id" type="text" class="form-control @error('login_id') is-invalid @enderror" name="login_id" value="{{ old('login_id') }}" required autocomplete="login_id" autofocus>
+
+                                @error('login_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('パスワードリセット用URLを送信') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        
-      </div>
-      <!--サイドメニュー-->
-      @include('commons.sidebar')
     </div>
-  </div>
-  
+</div>
 @endsection

@@ -23,8 +23,6 @@
                                 <li class="dropdown-item"><a href="/shop">店舗案内</a></li>
                                 {{-- お問合せフォームへのリンク --}}
                                 <li class="dropdown-item"><a href="/contact">お問い合わせ</a></li>
-                                {{-- パスワードリセットへのリンク --}}
-                                <li class="dropdown-item"><a href="/password/reset">パスワード変更</a></li>
                                 <li class="dropdown-divider"></li>
                                 {{-- ログアウトへのリンク --}}
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'ログアウト') !!}</li>
@@ -41,8 +39,6 @@
                                 <li class="dropdown-item"><a href="/users">会員一覧</a></li>
                                 {{-- FAQ一覧ページへのリンク --}}
                                 <li class="dropdown-item"><a href="/faqs">FAQ一覧</a></li>
-                                 {{-- パスワードリセットへのリンク --}}
-                                <li class="dropdown-item"><a href="/password/reset">パスワード変更</a></li>
                                 <li class="dropdown-divider"></li>
                                 {{-- ログアウトへのリンク --}}
                                 <li class="dropdown-item">{!! link_to_route('logout.get', 'Logout') !!}</li>

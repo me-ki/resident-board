@@ -71,14 +71,4 @@ class User extends Authenticatable
         $this->user_informations()->attach($informationId);
     }
     
-    /**
-     * Override to send for password reset notification.
-     *
-     * @param [type] $token
-     * @return void
-     */
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new PasswordResetNotification($token));
-    }
 }

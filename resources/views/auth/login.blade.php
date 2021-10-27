@@ -24,6 +24,8 @@
 
                 {!! Form::submit('ログイン', ['class' => 'btn btn-primary btn-block']) !!}
             {!! Form::close() !!}
+            <div class="mt-2"><small><a href="/password/reset">※パスワードリセットはこちら</a></small></div>
         </div>
+        
     </div>
 @endsection

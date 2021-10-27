@@ -28,7 +28,7 @@
                         </div>
         
                         <div class="form-group text-center">
-                            {!! Form::submit('登　録', ['class' => 'btn btn-primary w-25']) !!}
+                            {!! Form::submit('更　新', ['class' => 'btn btn-primary w-25']) !!}
                         </div>
     
                     {!! Form::close() !!}
